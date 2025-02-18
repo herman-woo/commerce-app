@@ -1,0 +1,25 @@
+<div class="cart-card" *ngIf="cart">
+    <div class="card-header">
+      <h2>Cart Summary</h2>
+    </div>
+    <div class="card-body">
+      <div class="cart-item" *ngFor="let item of cart?.items">
+        <div class="item-details">
+          <h3>{{ item.product_name }}</h3>
+          <p>Price: ${{ item.price.toFixed(2) }} x {{ item.quantity }}</p>
+        </div>
+        <div class="item-total">
+          <p>${{ (item.price * item.quantity).toFixed(2) }}</p>
+        </div>
+    </div>
+    <button class="add-item-btn" (click)="addItem()">+</button>
+    </div>
+    <div class="card-footer">
+      <div class="summary">
+        <p><strong>Subtotal:</strong> ${{ cart.subtotal.toFixed(2) }}</p>
+        <p><strong>Taxes:</strong> ${{ cart.taxes.toFixed(2) }}</p>
+        <p class="total"><strong>Final Total:</strong> ${{ cart.final_total.toFixed(2) }}</p>
+      </div>
+    </div>
+  </div>
+  
