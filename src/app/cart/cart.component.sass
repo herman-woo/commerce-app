@@ -1,4 +1,44 @@
 @import '../../styles.sass' // Import global styles
+.create-cart-btn
+  display: block
+  margin: 16px auto
+  padding: 10px 16px
+  background: lighten($secondary-color, 10%) // ✅ Grey button
+  color: #ffffff
+  font-size: 16px
+  font-weight: bold
+  border: none
+  border-radius: 6px
+  cursor: pointer
+  transition: background 0.3s, transform 0.2s
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1)
+
+  &:hover
+    background: darken($secondary-color, 10%) // ✅ Darker grey on hover
+    transform: scale(1.05)
+
+  &:active
+    transform: scale(0.98) // ✅ Click effect
+
+.remove-item-btn
+  width: 30px
+  height: 30px
+  background: #d32f2f
+  color: #ffffff
+  font-size: 18px
+  font-weight: bold
+  border: none
+  border-radius: 50%
+  cursor: pointer
+  transition: background 0.3s, transform 0.2s
+  margin-left: 10px
+
+  &:hover
+    background: darken(#d32f2f, 10%)
+    transform: scale(1.1)
+
+  &:active
+    transform: scale(0.9)
 
 .add-item-btn
   display: flex

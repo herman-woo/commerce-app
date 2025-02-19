@@ -1,25 +1,48 @@
-<div class="cart-card" *ngIf="cart">
+<div class="cart-card" *ngIf="!loading && cart; else loadingOrError">
     <div class="card-header">
-      <h2>Cart Summary</h2>
+        <h2>Cart Summary</h2>
     </div>
+
     <div class="card-body">
-      <div class="cart-item" *ngFor="let item of cart?.items">
-        <div class="item-details">
-          <h3>{{ item.product_name }}</h3>
-          <p>Price: ${{ item.price.toFixed(2) }} x {{ item.quantity }}</p>
+        <div class="cart-item" *ngFor="let item of cart.items">
+            <button class="remove-item-btn" *ngIf="item.id !== undefined" (click)="removeItem(item.id)">-</button>
+            <div class="item-details">
+                <h3>{{ item.product_name }}</h3>
+                <p>Price: ${{ item.price.toFixed(2) }} x {{ item.quantity }}</p>
+            </div>
+            <div class="item-total">
+                <p>${{ (item.price * item.quantity).toFixed(2) }}</p>
+            </div>
+            <!-- ✅ Remove Item Button -->
+
         </div>
-        <div class="item-total">
-          <p>${{ (item.price * item.quantity).toFixed(2) }}</p>
+
+        <!-- ✅ Show empty row for new item -->
+        <div class="cart-item new-item" *ngIf="newItem">
+            <input type="text" placeholder="Product Name" [(ngModel)]="newItem.product_name">
+            <input type="number" placeholder="Price" [(ngModel)]="newItem.price">
+            <input type="number" placeholder="Quantity" [(ngModel)]="newItem.quantity">
+            <button class="submit-item-btn" (click)="submitNewItem()">Add</button>
         </div>
+
+        <!-- ✅ Floating "+" Button to Add New Item -->
+        <button class="add-item-btn" (click)="addNewItemRow()">+</button>
     </div>
-    <button class="add-item-btn" (click)="addItem()">+</button>
-    </div>
+
     <div class="card-footer">
-      <div class="summary">
-        <p><strong>Subtotal:</strong> ${{ cart.subtotal.toFixed(2) }}</p>
-        <p><strong>Taxes:</strong> ${{ cart.taxes.toFixed(2) }}</p>
-        <p class="total"><strong>Final Total:</strong> ${{ cart.final_total.toFixed(2) }}</p>
-      </div>
+        <div class="summary">
+            <p><strong>Subtotal:</strong> ${{ formattedSubtotal }}</p>
+            <p><strong>Taxes:</strong> ${{ formattedTaxes }}</p>
+            <p class="total"><strong>Final Total:</strong> ${{ formattedFinalTotal }}</p>
+        </div>
     </div>
-  </div>
-  
+</div>
+
+<!-- Show Loading or Error Message -->
+<ng-template #loadingOrError>
+    <p *ngIf="loading">Loading cart...</p>
+    <!-- <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p> -->
+
+    <!-- ✅ Create Cart Button -->
+    <button class="create-cart-btn" *ngIf="errorMessage" (click)="createCart()">Create New Cart</button>
+</ng-template>
